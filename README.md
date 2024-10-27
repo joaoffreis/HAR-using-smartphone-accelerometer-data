@@ -1,10 +1,10 @@
 # Activity Classification Using Smartphone Accelerometer Data
 
-This repository contains the code and documentation for the final project from the HarvardX course: "Using Python for Research". The project involves classifying physical activities based on tri-axial accelerometer data collected from smartphones. 
+This repository contains code and documentation for the final project from the HarvardX course: "Using Python for Research." The project involves classifying physical activities based on tri-axial accelerometer data collected from smartphones. Evaluation by the faculty was based primarily on the **accuracy** of the model's predictions on the test set, serving as the principal criterion for grading.
 
 ## Project Overview
 
-The aim of this project is to develop a robust machine learning model to classify accelerometer data into four distinct activity categories:
+The goal is to develop a machine learning model to classify accelerometer data into four activity categories:
 - **1**: Standing
 - **2**: Walking
 - **3**: Stairs Down
@@ -14,44 +14,37 @@ The aim of this project is to develop a robust machine learning model to classif
 
 The project uses the following datasets:
 - **`train_time_series.csv`**: Contains raw accelerometer data with columns `timestamp`, `UTC time`, `accuracy`, `x`, `y`, and `z`.
-- **`train_labels.csv`**: Contains activity labels corresponding to the accelerometer data in `train_time_series.csv`.
-- **`test_time_series.csv`**: Contains accelerometer data for which predictions are to be made.
-- **`test_labels.csv`**: Contains timestamps for the test set; predictions are to be added to this file.
+- **`train_labels.csv`**: Contains activity labels for `train_time_series.csv`.
+- **`test_time_series.csv`**: Contains accelerometer data for predictions.
+- **`test_labels.csv`**: Contains timestamps for the test set; predictions will be saved here.
 
 ## Methods
 
 ### Data Preprocessing
-- Checked for missing or corrupted values.
-- Verified class balance and completeness of measurements.
-- Added acceleration magnitude as a feature.
-- Addressed inconsistencies in timestamp records.
+- Checked for missing or corrupted values, and addressed class balance.
+- Added acceleration magnitude as a feature and resolved timestamp inconsistencies.
 
 ### Feature Extraction
-- Applied PCA to reduce dimensionality and extract relevant features from the accelerometer data.
-
+- Applied **Fourier Transform** and **Power Spectral Density** to generate frequency-domain features.
+- Calculated statistical features, such as mean, max, skewness, and acceleration magnitudes.
+  
 ### Model Training
-- **Model Selection**: Chose Support Vector Machine (SVM) for its superior F1 score and stability.
-- **Hyperparameter Tuning**: Optimized using Grid Search with parameters including `C`, `kernel`, `gamma`, and `pca__n_components`.
-- **Cross-Validation**: Used 3-fold cross-validation with stratified splits to handle class imbalance.
+- **Model Selection**: Chose **Random Forest** based on balanced performance across classes.
+- **Class Imbalance Handling**: Applied **SMOTE** and calculated class weights to address imbalances.
+- **Hyperparameter Tuning**: Used **Grid Search** to optimize parameters.
+- **Cross-Validation**: Used 5-fold stratified cross-validation for robust evaluation.
 
 ### Model Evaluation
-- **Metrics**: Evaluated using F1 score and accuracy.
-- **Test Set Results**: Achieved F1 Score: 0.6959 and Accuracy: 0.7299.
+- **Metrics**: Evaluated primarily using F1 score, alongside precision, recall, and accuracy.
+- **Test Set Results**: Achieved F1 Score: 0.7535, Precision: 0.7565, Recall: 0.7594, Accuracy: 0.7594.
+- **Confusion Matrix** and **ROC Curve**: Analyzed model performance across classes.
 
 ## Results
 
-- The SVM model demonstrated reliable performance but showed limited improvement from hyperparameter tuning.
-- Feature extraction and model tuning were crucial but improvements were modest.
-- **Future Work**: Enhancements could include advanced feature engineering and exploring class imbalance techniques like SMOTE.
-
-## Running the Code
-
-To run the code:
-1. Ensure you have the necessary Python libraries installed (e.g., `numpy`, `pandas`, `scikit-learn`).
-2. Load the datasets and preprocess the data as described.
-3. Run the model training and evaluation scripts.
-4. Generate predictions for the test set and save them in `test_labels.csv`.
+- The Random Forest model demonstrated reliable performance across all activity classes.
+- Minor improvements were noted from hyperparameter tuning.
+- **Future Work**: Additional feature engineering and advanced imbalance handling could further enhance model performance.
 
 ## Code Execution Time
 
-Timing the execution of the code, from loading the test data to completing the predictions, was requested to compare the computational efficiency of different students. It does not affect grading.
+Execution timing, from loading test data to predictions, is measured to compare efficiency across students. This does not affect grading.
